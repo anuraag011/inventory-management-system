@@ -16,4 +16,16 @@ from application.controllers import *
 # from application.models import * (this is not req.)
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+        Manager = User.query.filter_by(username="Manager1").first()
+        if Manager is None:
+            Manager = User(
+            username="Manager1",
+            email="manager@user.com",
+            password="5678",
+            type="manager"
+        )
+        db.session.add(Manager)
+        db.session.commit()
     app.run()
